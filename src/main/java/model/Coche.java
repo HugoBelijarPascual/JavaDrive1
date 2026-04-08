@@ -15,8 +15,8 @@ public class Coche extends Vehiculo{
         }
     }
     public String obtenerDetalles() {
-        return super.toString() + " Coche ["+tipoCoche+"] Plazas: " +
-                numPlazas ;
+        return "\nCoche ["+tipoCoche+"]\nNº Plazas: " +
+                numPlazas +"\n";
     }
     public boolean numPlazasEsCorrecto(int numPlazas) {
         return numPlazas >= 2 && numPlazas <= 7;

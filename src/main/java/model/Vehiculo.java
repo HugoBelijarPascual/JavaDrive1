@@ -1,6 +1,6 @@
 package model;
 
-public class Vehiculo {
+public abstract class Vehiculo {
 
     private String matricula;
     private String marca;
@@ -16,8 +16,16 @@ public class Vehiculo {
     }
     @Override
     public String toString() {
-        return "[" +matricula+"]" + marca + " " + modelo + " " + disponible;
+        if (disponible) {
+            return "[" +matricula+"] " + marca + " " + modelo + " | Disponible";
+        } else {
+            return "[" +matricula+"]" + marca + " " + modelo + " | No disponible";
+        }
+
     }
+
+    public abstract String obtenerDetalles();
+
     public void setDisponible(boolean disponible) {
         this.disponible = disponible;
     }

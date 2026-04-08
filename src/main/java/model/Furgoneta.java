@@ -21,9 +21,9 @@ public class Furgoneta extends Vehiculo{
     }
     public String obtenerDetalles() {
         if (esDeCarga) {
-            return super.toString() + " Furgoneta de Carga ["+capacidad+" kg]";
+            return " Furgoneta de Carga ["+capacidad+" kg]\n";
         } else {
-            return super.toString() + " Furgoneta de Pasajeros ["+capacidad+" personas]";
+            return " Furgoneta de Pasajeros ["+capacidad+" personas]\n";
         }
     }
     private boolean numPlazasEsCorrecto(int numPlazas) {

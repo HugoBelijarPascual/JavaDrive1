@@ -12,9 +12,9 @@ public class Cliente {
     }
     @Override
     public String toString() {
-        return "Hola " + nombre +
-                "\nTu DNI es: " + dni+
-                "\nTu telefono es: " + telefono;
+        return "Nombre: " + nombre +
+                "\nDNI: " + dni+
+                "\nTelefono: " + telefono;
     }
     public String getDni() {
         return dni;

@@ -4,10 +4,7 @@ import logica.GestorPersistencia;
 import model.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
@@ -40,12 +37,9 @@ public class Main {
                     pedirDatosReserva();
                     break;
                 case 5:
-                    for (Cliente c : clientes) {
-                        System.out.println(c);
-                        System.out.println("----------------------------------------");
-                    }
+                    listarClientes();
                     break;
-                    case 6:
+                case 6:
                     System.out.println("Saliendo del programa...");
                     guardarDatos();
                     System.out.println("Datos guardados correctamente.");
@@ -72,7 +66,7 @@ public class Main {
         System.out.println("Ingrese el DNI del cliente:");
         String dni = sc.nextLine();
         Cliente c = buscarCliente(dni);
-        sc.nextLine();
+
 
         System.out.println("Matrícula del vehículo: ");
         String matricula = sc.nextLine();
@@ -90,6 +84,7 @@ public class Main {
     }
 
     public static void crearCliente() {
+        System.out.println("====ALTA DE NUEVO CLIENTE====");
         System.out.println("DNI: ");
         String dni = sc.nextLine();
 
@@ -125,26 +120,42 @@ public class Main {
                 TipoCoche tipoC = TipoCoche.valueOf(tipoCoche);
 
                 System.out.println("Numero de plazas: ");
-                int numPlazas = sc.nextInt();
-                sc.nextLine();
+                int numPlazas = Integer.parseInt(sc.nextLine());
 
                 flota.add(new Coche(matricula, marca, modelo, true, tipoC, numPlazas));
                 System.out.println("Coche registrado correctamente.");
             } catch (NumPlazasException e) {
                 System.out.println("ERROR: " + e.getMessage());
+            } catch (NumberFormatException e) {
+                System.out.println("ERROR: debe introducir un dígito");
             } catch (IllegalArgumentException e) {
                 System.out.println("ERROR: el tipo de coche no existe.");
             }
         } else if (tipo.equalsIgnoreCase("F")) {
-            System.out.println("¿Es de carga? (true/false)");
-            boolean esDeCarga = sc.nextBoolean();
-            sc.nextLine();
+            try {
+                System.out.println("¿Es de carga? (true/false)");
+                boolean esDeCarga = sc.nextBoolean();
+                sc.nextLine();
+                int cap;
 
-            System.out.print("Capacidad (Kilos si es carga / Personas si no): ");
-            int cap = sc.nextInt(); sc.nextLine();
+                if (esDeCarga) {
+                    System.out.print("Capacidad en kilos: ");
+                    cap = sc.nextInt();
 
-            flota.add(new Furgoneta(matricula, marca, modelo, true, esDeCarga, cap));
-            System.out.println("Furgoneta registrada correctamente.");
+                } else {
+                    System.out.print("Número de personas (2-7): ");
+                    cap = sc.nextInt();
+                }
+                sc.nextLine();
+
+                flota.add(new Furgoneta(matricula, marca, modelo, true, esDeCarga, cap));
+                System.out.println("Furgoneta registrada correctamente.");
+            } catch (InputMismatchException e) {
+                System.out.println("ERROR: debes introducir el formato correcto (true/false)");
+                sc.nextLine();
+            } catch (NumPlazasException e){
+                System.out.println("ERROR: " +e.getMessage());
+            }
 
         } else {
             System.out.println("Opción no válida. Saliendo del alta del vehículo.");
@@ -169,18 +180,40 @@ public class Main {
         return null;
     }
 
+    public static void listarClientes() {
+        boolean encontrado = false;
+
+        for (Cliente c : clientes) {
+            System.out.println(c);
+            System.out.println("----------------------------------------");
+            encontrado = true;
+        }
+
+        if (!encontrado) {
+            System.out.println("No se han encontrado clientes.");
+        }
+    }
+
     public static void listarVehiculosDisponibles() {
+        boolean encontrado = false;
+
         for (Vehiculo v : flota) {
             if (v.isDisponible()) {
                 System.out.println(v);
+                encontrado = true;
             }
         }
+        if (!encontrado) {
+            System.out.println("No hay vehículos disponibles");
+        }
+
     }
 
     public static void realizarReserva(Cliente cliente, Vehiculo vehiculo, LocalDate fechaInicio, LocalDate fechaFin) {
         vehiculo.setDisponible(false);
         Reserva reserva = new Reserva(cliente, vehiculo, fechaInicio, fechaFin);
         exportarTicket(reserva);
+        guardarDatos();
     }
 
     public static void cargarDatos() {
