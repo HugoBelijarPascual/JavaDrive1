@@ -30,4 +30,12 @@ public class Coche extends Vehiculo{
         return numPlazas;
     }
 
+    public void setTipoCoche(Enum tipoCoche) {
+        this.tipoCoche = tipoCoche;
+    }
+
+    public void setNumPlazas(int numPlazas) {
+        this.numPlazas = numPlazas;
+    }
+
 }
