@@ -1,19 +1,12 @@
 package app;
 
-import logica.GestorPersistencia;
+import logica.GestorReservas;
 import model.*;
 
-import java.time.LocalDate;
 import java.util.*;
 
 public class Main {
 
-
-    private static List<Vehiculo> flota = new ArrayList<>();
-    private static List<Cliente> clientes = new ArrayList<>();
-
-    private static GestorPersistencia gestor = new GestorPersistencia();
-    private static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
 
@@ -22,7 +15,7 @@ public class Main {
 
         do {
             opcion = mostrarMenu();
-            sc.nextLine();
+            GestorReservas.sc.nextLine();
             switch (opcion) {
                 case 1:
                     crearCliente();
@@ -34,14 +27,14 @@ public class Main {
                     listarVehiculosDisponibles();
                     break;
                 case 4:
-                    pedirDatosReserva();
+                    GestorReservas.pedirDatosReserva();
                     break;
                 case 5:
                     listarClientes();
                     break;
                 case 6:
                     System.out.println("Saliendo del programa...");
-                    guardarDatos();
+                    GestorReservas.guardarDatos();
                     System.out.println("Datos guardados correctamente.");
             }
 
@@ -58,71 +51,50 @@ public class Main {
         System.out.println("5. Listar Clientes");
         System.out.println("6. Salir");
         System.out.println("\nElegir una opcion:");
-        return sc.nextInt();
+        return GestorReservas.sc.nextInt();
 
-    }
-
-    public static void pedirDatosReserva(){
-        System.out.println("Ingrese el DNI del cliente:");
-        String dni = sc.nextLine();
-        Cliente c = buscarCliente(dni);
-
-
-        System.out.println("Matrícula del vehículo: ");
-        String matricula = sc.nextLine();
-        Vehiculo v = buscarVehiculo(matricula);
-
-        if (c == null || v == null || !v.isDisponible()) {
-            System.out.println("ERROR: Cliente no existe o vehículo no disponible.");
-        } else {
-            System.out.println("¿Cuántos días de alquiler?");
-            int dias = sc.nextInt();
-            sc.nextLine();
-
-            realizarReserva(c, v, LocalDate.now(), LocalDate.now().plusDays(dias));
-        }
     }
 
     public static void crearCliente() {
         System.out.println("====ALTA DE NUEVO CLIENTE====");
         System.out.println("DNI: ");
-        String dni = sc.nextLine();
+        String dni = GestorReservas.sc.nextLine();
 
         System.out.println("Nombre: ");
-        String nombre = sc.nextLine();
+        String nombre = GestorReservas.sc.nextLine();
 
         System.out.println("Tlf: ");
-        String telefono = sc.nextLine();
+        String telefono = GestorReservas.sc.nextLine();
 
-        clientes.add(new Cliente(dni, nombre, telefono));
+        GestorReservas.clientes.add(new Cliente(dni, nombre, telefono));
     }
 
     public static void crearVehiculo() {
         System.out.println("====ALTA DE NUEVO VEHICULO====");
         System.out.println("¿Coche (C) o Furgoneta (F)?");
-        String tipo = sc.nextLine();
+        String tipo = GestorReservas.sc.nextLine();
 
         System.out.println("Introduzca los datos del coche:");
         System.out.println("Matricula: ");
-        String matricula = sc.nextLine();
+        String matricula = GestorReservas.sc.nextLine();
 
         System.out.println("Marca: ");
-        String marca = sc.nextLine();
+        String marca = GestorReservas.sc.nextLine();
 
         System.out.println("Modelo: ");
-        String modelo = sc.nextLine();
+        String modelo = GestorReservas.sc.nextLine();
 
 
         if (tipo.equalsIgnoreCase("C")) {
             try {
                 System.out.println("Tipo de coche (Pequeño, Familiar, Deportivo):");
-                String tipoCoche = sc.nextLine();
+                String tipoCoche = GestorReservas.sc.nextLine();
                 TipoCoche tipoC = TipoCoche.valueOf(tipoCoche);
 
                 System.out.println("Numero de plazas: ");
-                int numPlazas = Integer.parseInt(sc.nextLine());
+                int numPlazas = Integer.parseInt(GestorReservas.sc.nextLine());
 
-                flota.add(new Coche(matricula, marca, modelo, true, tipoC, numPlazas));
+                GestorReservas.flota.add(new Coche(matricula, marca, modelo, true, tipoC, numPlazas));
                 System.out.println("Coche registrado correctamente.");
             } catch (NumPlazasException e) {
                 System.out.println("ERROR: " + e.getMessage());
@@ -134,25 +106,25 @@ public class Main {
         } else if (tipo.equalsIgnoreCase("F")) {
             try {
                 System.out.println("¿Es de carga? (true/false)");
-                boolean esDeCarga = sc.nextBoolean();
-                sc.nextLine();
+                boolean esDeCarga = GestorReservas.sc.nextBoolean();
+                GestorReservas.sc.nextLine();
                 int cap;
 
                 if (esDeCarga) {
                     System.out.print("Capacidad en kilos: ");
-                    cap = sc.nextInt();
+                    cap = GestorReservas.sc.nextInt();
 
                 } else {
                     System.out.print("Número de personas (2-7): ");
-                    cap = sc.nextInt();
+                    cap = GestorReservas.sc.nextInt();
                 }
-                sc.nextLine();
+                GestorReservas.sc.nextLine();
 
-                flota.add(new Furgoneta(matricula, marca, modelo, true, esDeCarga, cap));
+                GestorReservas.flota.add(new Furgoneta(matricula, marca, modelo, true, esDeCarga, cap));
                 System.out.println("Furgoneta registrada correctamente.");
             } catch (InputMismatchException e) {
                 System.out.println("ERROR: debes introducir el formato correcto (true/false)");
-                sc.nextLine();
+                GestorReservas.sc.nextLine();
             } catch (NumPlazasException e){
                 System.out.println("ERROR: " +e.getMessage());
             }
@@ -162,28 +134,10 @@ public class Main {
         }
     }
 
-    public static Cliente buscarCliente(String dni) {
-        for (Cliente c : clientes) {
-            if (c.getDni().equals(dni)) {
-                return c;
-            }
-        }
-        return null;
-    }
-
-    public static Vehiculo buscarVehiculo(String matricula) {
-        for (Vehiculo v : flota) {
-            if (v.getMatricula().equals(matricula)) {
-                return v;
-            }
-        }
-        return null;
-    }
-
     public static void listarClientes() {
         boolean encontrado = false;
 
-        for (Cliente c : clientes) {
+        for (Cliente c : GestorReservas.clientes) {
             System.out.println(c);
             System.out.println("----------------------------------------");
             encontrado = true;
@@ -197,7 +151,7 @@ public class Main {
     public static void listarVehiculosDisponibles() {
         boolean encontrado = false;
 
-        for (Vehiculo v : flota) {
+        for (Vehiculo v : GestorReservas.flota) {
             if (v.isDisponible()) {
                 System.out.println(v);
                 encontrado = true;
@@ -209,25 +163,10 @@ public class Main {
 
     }
 
-    public static void realizarReserva(Cliente cliente, Vehiculo vehiculo, LocalDate fechaInicio, LocalDate fechaFin) {
-        vehiculo.setDisponible(false);
-        Reserva reserva = new Reserva(cliente, vehiculo, fechaInicio, fechaFin);
-        exportarTicket(reserva);
-        guardarDatos();
-    }
-
     public static void cargarDatos() {
-        flota = gestor.cargarVehiculos();
-        clientes = gestor.cargarClientes();
-        Reserva.setNextId(gestor.calcularSiguienteIdReserva());
-    }
-    public static void guardarDatos() {
-        gestor.guardarVehiculos(flota);
-        gestor.guardarClientes(clientes);
+        GestorReservas.flota = GestorReservas.gestor.cargarVehiculos();
+        GestorReservas.clientes = GestorReservas.gestor.cargarClientes();
+        Reserva.setNextId(GestorReservas.gestor.calcularSiguienteIdReserva());
     }
 
-    public static void exportarTicket(Reserva reserva) {
-
-        gestor.exportarTicket(reserva);
-    }
 }

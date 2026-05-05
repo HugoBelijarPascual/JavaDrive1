@@ -100,7 +100,7 @@ public class GestorPersistencia {
         File dir = new File(carpeta);
         if (!dir.exists()) {
             dir.mkdirs();
-            return 1; // No había carpeta ni archivos
+            return 1;
         }
         int maxId = 0;
         Pattern p = Pattern.compile("reservas_([0-9]+)\\.txt");
