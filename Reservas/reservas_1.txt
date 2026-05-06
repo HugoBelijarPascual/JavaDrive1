@@ -2,22 +2,24 @@
  CONTRATO DE ALQUILER - JAVADRIVE
 ============================================
 ID RESERVA: 1
-FECHA EMISIÓN: 2026-04-09
+FECHA EMISIÓN: 2026-05-06
 --------------------------------------------
 DATOS DEL CLIENTE:
-Nombre: Elena Blanco
-DNI: 67890123F
-Teléfono: 655666777
+Nombre: A
+DNI: 1
+Teléfono: 1
 --------------------------------------------
 DATOS DEL VEHÍCULO: 
-Marca y Modelo: Ford Transit
-Matrícula: 1122JKL
+Marca y Modelo: S I
+Matrícula: ABC
 
-Detalles:  Furgoneta de Carga [1200 kg]
+Detalles: 
+Coche [Familiar]
+Nº Plazas: 5
 --------------------------------------------
 PERIODO DE ALQUILER: 
-Fecha de recogida: 2026-04-09
-Fecha de devolución: 2026-04-19
-Total días: 10
+Fecha de recogida: 2026-05-06
+Fecha de devolución: 2026-05-07
+Total días: 1
 --------------------------------------------
 ESTADO: Confirmado y Pendiente de pago

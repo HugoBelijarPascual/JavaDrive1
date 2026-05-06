@@ -1,2 +1,0 @@
-COCHE;1111AAA;Toyota;Auris;true;Pequeño;5
-COCHE;1233adf;toyota;corola;false;Pequeño;5
