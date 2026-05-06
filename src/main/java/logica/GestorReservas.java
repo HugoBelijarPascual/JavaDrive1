@@ -1,43 +1,37 @@
 package logica;
 
+import app.Main;
 import model.Cliente;
 import model.Reserva;
 import model.Vehiculo;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
 public class GestorReservas {
-    public static List<Vehiculo> flota = new ArrayList<>();
-    public static List<Cliente> clientes = new ArrayList<>();
-    public static GestorPersistencia gestor = new GestorPersistencia();
-    public static Scanner sc = new Scanner(System.in);
 
     public static void pedirDatosReserva(){
         System.out.println("Ingrese el DNI del cliente:");
-        String dni = sc.nextLine();
+        String dni = Main.sc.nextLine();
         Cliente c = buscarCliente(dni);
 
 
         System.out.println("Matrícula del vehículo: ");
-        String matricula = sc.nextLine();
+        String matricula = Main.sc.nextLine();
         Vehiculo v = buscarVehiculo(matricula);
 
         if (c == null || v == null || !v.isDisponible()) {
             System.out.println("ERROR: Cliente no existe o vehículo no disponible.");
         } else {
             System.out.println("¿Cuántos días de alquiler?");
-            int dias = sc.nextInt();
-            sc.nextLine();
+            int dias = Main.sc.nextInt();
+            Main.sc.nextLine();
 
             realizarReserva(c, v, LocalDate.now(), LocalDate.now().plusDays(dias));
         }
     }
 
     public static Cliente buscarCliente(String dni) {
-        for (Cliente c : clientes) {
+        for (Cliente c : GestorClientes.clientes) {
             if (c.getDni().equals(dni)) {
                 return c;
             }
@@ -46,7 +40,7 @@ public class GestorReservas {
     }
 
     public static Vehiculo buscarVehiculo(String matricula) {
-        for (Vehiculo v : flota) {
+        for (Vehiculo v : GestorFlota.flota) {
             if (v.getMatricula().equals(matricula)) {
                 return v;
             }
@@ -62,12 +56,12 @@ public class GestorReservas {
     }
 
     public static void guardarDatos() {
-        gestor.guardarVehiculos(flota);
-        gestor.guardarClientes(clientes);
+        GestorPersistencia.gestor.guardarVehiculos(GestorFlota.flota);
+        GestorPersistencia.gestor.guardarClientes(GestorClientes.clientes);
     }
 
     public static void exportarTicket(Reserva reserva) {
 
-        gestor.exportarTicket(reserva);
+        GestorPersistencia.gestor.exportarTicket(reserva);
     }
 }

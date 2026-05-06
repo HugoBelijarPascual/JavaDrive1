@@ -2,11 +2,16 @@ package app;
 
 import logica.GestorClientes;
 import logica.GestorFlota;
+import logica.GestorPersistencia;
 import logica.GestorReservas;
 import model.*;
 
+import java.util.Scanner;
+
 public class Main {
 
+
+    public static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
 
@@ -15,7 +20,7 @@ public class Main {
 
         do {
             opcion = mostrarMenu();
-            GestorReservas.sc.nextLine();
+            sc.nextLine();
             switch (opcion) {
                 case 1:
                     GestorClientes.crearCliente();
@@ -51,14 +56,14 @@ public class Main {
         System.out.println("5. Listar Clientes");
         System.out.println("6. Salir");
         System.out.println("\nElegir una opcion:");
-        return GestorReservas.sc.nextInt();
+        return sc.nextInt();
 
     }
 
     public static void cargarDatos() {
-        GestorReservas.flota = GestorReservas.gestor.cargarVehiculos();
-        GestorReservas.clientes = GestorReservas.gestor.cargarClientes();
-        Reserva.setNextId(GestorReservas.gestor.calcularSiguienteIdReserva());
+        GestorFlota.flota = GestorPersistencia.gestor.cargarVehiculos();
+        GestorClientes.clientes = GestorPersistencia.gestor.cargarClientes();
+        Reserva.setNextId(GestorPersistencia.gestor.calcularSiguienteIdReserva());
     }
 
 }

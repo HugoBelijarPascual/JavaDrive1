@@ -11,6 +11,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class GestorPersistencia {
+    public static GestorPersistencia gestor = new GestorPersistencia();
+
     public List<Vehiculo> cargarVehiculos() {
         List<Vehiculo> lista = new ArrayList<>();
 

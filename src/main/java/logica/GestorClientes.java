@@ -1,28 +1,34 @@
 package logica;
 
+import app.Main;
 import model.Cliente;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GestorClientes {
 
 
+    public static List<Cliente> clientes = new ArrayList<>();
+
     public static void crearCliente() {
         System.out.println("====ALTA DE NUEVO CLIENTE====");
         System.out.println("DNI: ");
-        String dni = GestorReservas.sc.nextLine();
+        String dni = Main.sc.nextLine();
 
         System.out.println("Nombre: ");
-        String nombre = GestorReservas.sc.nextLine();
+        String nombre = Main.sc.nextLine();
 
         System.out.println("Tlf: ");
-        String telefono = GestorReservas.sc.nextLine();
+        String telefono = Main.sc.nextLine();
 
-        GestorReservas.clientes.add(new Cliente(dni, nombre, telefono));
+        clientes.add(new Cliente(dni, nombre, telefono));
     }
 
     public static void listarClientes() {
         boolean encontrado = false;
 
-        for (Cliente c : GestorReservas.clientes) {
+        for (Cliente c : clientes) {
             System.out.println(c);
             System.out.println("----------------------------------------");
             encontrado = true;

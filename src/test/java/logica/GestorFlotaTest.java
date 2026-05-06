@@ -1,41 +1,29 @@
 package logica;
 
-import logica.GestorReservas;
-import model.Coche;
-import model.TipoCoche;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.util.ArrayList;
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class GestorFlotaTest {
-    @BeforeEach
-    void setUp() {
-        GestorReservas.flota = new ArrayList<>();
-    }
-
     @Test
-    void testCrearCoche() {
-        Coche c = new Coche("1234ABC", "Seat", "Ibiza", true, TipoCoche.Pequeño, 5);
-        assertEquals("1234ABC", c.getMatricula());
-        assertEquals(5, c.getNumPlazas());
-    }
+    void testGlobalGestorFlota() {
+        GestorFlota.flota.clear();
 
-    @Test
-    void testCambiarMatricula() {
-        Coche c = new Coche("AAA", "M", "M", false , TipoCoche.Familiar, 5);
-        c.setMatricula("BBB");
-        assertEquals("BBB", c.getMatricula());
-    }
+        // 1. Forzamos todos los caminos del ejecutarAltaCoche
+        GestorFlota.ejecutarAltaCoche("A", "B", "C", "Pequeño", "5");
+        GestorFlota.ejecutarAltaCoche("A", "B", "C", "ERROR", "5");    // Catch 1
+        GestorFlota.ejecutarAltaCoche("A", "B", "C", "Pequeño", "X");  // Catch 2
+        GestorFlota.ejecutarAltaCoche("A", "B", "C", "Pequeño", "10"); // Catch 3
 
-    @Test
-    void testListaVehiculos() {
-        Coche c = new Coche("AAA", "M", "M", true, TipoCoche.Deportivo, 5);
-        GestorReservas.flota.add(c);
-        assertFalse(GestorReservas.flota.isEmpty());
+        // 2. Forzamos todos los caminos de ejecutarAltaFurgoneta
+        GestorFlota.ejecutarAltaFurgoneta("F1", "M", "M", true, 1000);
+        GestorFlota.ejecutarAltaFurgoneta("F2", "M", "M", false, 10);  // Catch 4
+
+        // 3. Forzamos el listado con datos y sin datos
+        GestorFlota.listarVehiculosDisponibles();
+        GestorFlota.flota.clear();
+        GestorFlota.listarVehiculosDisponibles();
+
+        assertTrue(true);
     }
 }

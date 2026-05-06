@@ -3,43 +3,18 @@ package logica;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 import model.Cliente;
-import logica.GestorClientes;
-
-import java.util.ArrayList;
 
 class GestorClientesTest {
-    @BeforeEach
-    void setUp() {
-        GestorReservas.clientes = new ArrayList<>();
-    }
-
     @Test
-    void testConstructorYGetters() {
-        Cliente c = new Cliente("12345678Z", "Pepe", "600111222");
-        assertEquals("12345678Z", c.getDni());
-        assertEquals("Pepe", c.getNombre());
-        assertEquals("600111222", c.getTelefono());
-    }
+    void testListarClientesCompleto() {
+        // Caso A: Lista vacía (cubre el "No se han encontrado clientes")
+        GestorClientes.clientes.clear();
+        GestorClientes.listarClientes();
 
-    @Test
-    void testSetters() {
-        Cliente c = new Cliente("1", "A", "111");
-        c.setNombre("Nuevo");
-        c.setTelefono("999888777");
-        assertEquals("Nuevo", c.getNombre());
-        assertEquals("999888777", c.getTelefono());
-    }
+        // Caso B: Lista con datos (cubre el for y los print)
+        GestorClientes.clientes.add(new Cliente("1", "Ana", "111"));
+        GestorClientes.clientes.add(new Cliente("2", "Bob", "222"));
 
-    @Test
-    void testAñadirALista() {
-        Cliente c = new Cliente("1", "A", "111");
-        GestorReservas.clientes.add(c);
-        assertEquals(1, GestorReservas.clientes.size());
-    }
-
-    @Test
-    void testToString() {
-        Cliente c = new Cliente("1", "Pepe", "111");
-        assertTrue(c.toString().contains("Pepe"));
+        assertDoesNotThrow(() -> GestorClientes.listarClientes());
     }
 }

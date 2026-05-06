@@ -12,15 +12,15 @@ class GestorReservasTest {
     @BeforeEach
     void setUp() {
         // Limpiamos las listas que SI existen en tu GestorReservas
-        GestorReservas.flota = new ArrayList<>();
-        GestorReservas.clientes = new ArrayList<>();
+        GestorFlota.flota = new ArrayList<>();
+        GestorClientes.clientes = new ArrayList<>();
         Reserva.setNextId(1);
     }
 
     @Test
     void testBuscarCliente() {
         Cliente c = new Cliente("123", "Pepe", "666");
-        GestorReservas.clientes.add(c);
+        GestorClientes.clientes.add(c);
 
         // Probamos el método buscarCliente de tu lógica
         assertEquals(c, GestorReservas.buscarCliente("123"));
@@ -30,7 +30,7 @@ class GestorReservasTest {
     @Test
     void testBuscarVehiculo() throws NumPlazasException {
         Vehiculo v = new Coche("ABC", "Seat", "Ibiza", true, TipoCoche.Pequeño, 5);
-        GestorReservas.flota.add(v);
+        GestorFlota.flota.add(v);
 
         // Probamos el método buscarVehiculo de tu lógica
         assertEquals(v, GestorReservas.buscarVehiculo("ABC"));
@@ -70,4 +70,8 @@ class GestorReservasTest {
         assertEquals(1, r1.getIdReserva());
         assertEquals(2, r2.getIdReserva());
     }
+
+
+
+
 }
