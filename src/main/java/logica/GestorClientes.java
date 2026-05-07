@@ -1,6 +1,5 @@
 package logica;
 
-import app.Main;
 import model.Cliente;
 
 import java.util.ArrayList;
@@ -11,18 +10,20 @@ public class GestorClientes {
 
     public static List<Cliente> clientes = new ArrayList<>();
 
-    public static void crearCliente() {
-        System.out.println("====ALTA DE NUEVO CLIENTE====");
-        System.out.println("DNI: ");
-        String dni = Main.sc.nextLine();
 
-        System.out.println("Nombre: ");
-        String nombre = Main.sc.nextLine();
+    public static boolean crearCliente(Cliente nuevo) {
+        if (nuevo == null || nuevo.getDni() == null || nuevo.getDni().isEmpty()) {
+            return false;
+        }
 
-        System.out.println("Tlf: ");
-        String telefono = Main.sc.nextLine();
+        // Lógica de negocio: No permitir DNIs duplicados
+        for (Cliente c : clientes) {
+            if (c.getDni().equalsIgnoreCase(nuevo.getDni())) {
+                return false;
+            }
+        }
 
-        clientes.add(new Cliente(dni, nombre, telefono));
+        return clientes.add(nuevo);
     }
 
     public static void listarClientes() {

@@ -5,16 +5,39 @@ import static org.junit.jupiter.api.Assertions.*;
 import model.Cliente;
 
 class GestorClientesTest {
-    @Test
-    void testListarClientesCompleto() {
-        // Caso A: Lista vacía (cubre el "No se han encontrado clientes")
+    @BeforeEach
+    void setUp() {
+        // Limpiamos la lista antes de cada test para que sean independientes
         GestorClientes.clientes.clear();
-        GestorClientes.listarClientes();
+    }
 
-        // Caso B: Lista con datos (cubre el for y los print)
-        GestorClientes.clientes.add(new Cliente("1", "Ana", "111"));
-        GestorClientes.clientes.add(new Cliente("2", "Bob", "222"));
+    @Test
+    void testAddClienteExitoso() {
+        Cliente c = new Cliente("123", "Pepe", "600");
+        boolean resultado = GestorClientes.crearCliente(c);
 
+        assertTrue(resultado, "El cliente debería haberse añadido");
+        assertEquals(1, GestorClientes.clientes.size());
+    }
+
+    @Test
+    void testAddClienteDuplicado() {
+        GestorClientes.crearCliente(new Cliente("111", "Ana", "111"));
+
+        // Intentamos añadir otro con el mismo DNI
+        boolean resultado = GestorClientes.crearCliente(new Cliente("111", "Luis", "222"));
+
+        assertFalse(resultado, "No debería permitir DNIs duplicados");
+        assertEquals(1, GestorClientes.clientes.size());
+    }
+
+    @Test
+    void testListarClientesVacioYConDatos() {
+        // Cubre la rama del "No se han encontrado clientes"
+        assertDoesNotThrow(() -> GestorClientes.listarClientes());
+
+        // Cubre la rama del bucle FOR y los prints
+        GestorClientes.crearCliente(new Cliente("222", "Marta", "999"));
         assertDoesNotThrow(() -> GestorClientes.listarClientes());
     }
 }

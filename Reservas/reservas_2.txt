@@ -2,7 +2,7 @@
  CONTRATO DE ALQUILER - JAVADRIVE
 ============================================
 ID RESERVA: 2
-FECHA EMISIÓN: 2026-05-06
+FECHA EMISIÓN: 2026-05-07
 --------------------------------------------
 DATOS DEL CLIENTE:
 Nombre: A
@@ -10,16 +10,16 @@ DNI: 1
 Teléfono: 1
 --------------------------------------------
 DATOS DEL VEHÍCULO: 
-Marca y Modelo: B C
-Matrícula: A
+Marca y Modelo: X X
+Matrícula: M1
 
 Detalles: 
 Coche [Pequeño]
 Nº Plazas: 5
 --------------------------------------------
 PERIODO DE ALQUILER: 
-Fecha de recogida: 2026-05-06
-Fecha de devolución: 2026-05-07
-Total días: 1
+Fecha de recogida: 2026-05-07
+Fecha de devolución: 2026-05-12
+Total días: 5
 --------------------------------------------
 ESTADO: Confirmado y Pendiente de pago
