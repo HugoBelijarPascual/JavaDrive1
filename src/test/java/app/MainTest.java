@@ -12,12 +12,10 @@ class MainTest {
 
     @Test
     void testMenusPrincipales() {
-        // Simulamos que el usuario escribe: DNI, Nombre, Telefono
+        // Aqui simulamos un nuevo usuario
         String entradaSimulada = "123\nPepe\n666\n";
         InputStream in = new ByteArrayInputStream(entradaSimulada.getBytes());
-        System.setIn(in); // Cambiamos la entrada del sistema
 
-        // Re-inicializamos el scanner del Main para que use nuestra entrada
         Main.sc = new java.util.Scanner(System.in);
 
         assertDoesNotThrow(() -> Main.menuAltaCliente());

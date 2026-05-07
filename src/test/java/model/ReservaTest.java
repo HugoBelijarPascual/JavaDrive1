@@ -48,14 +48,12 @@ class ReservaTest {
 
     @Test
     void testSettersYStatic() {
-        // 1. Cubrir setNextId y sus dos ramas (if y else implícito)
         Reserva.setNextId(100);
         Reserva r = new Reserva(null, null, null, null);
         assertEquals(100, r.getIdReserva());
 
-        Reserva.setNextId(-5); // Rama donde no hace nada (next <= 0)
+        Reserva.setNextId(-5);
 
-        // 2. Cubrir setIdReserva (el único setter que te faltaba llamar)
         r.setIdReserva(500);
         assertEquals(500, r.getIdReserva());
     }

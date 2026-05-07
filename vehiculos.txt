@@ -1,1 +1,2 @@
 COCHE;M1;X;X;false;Pequeño;5
+COCHE;1234fdr;toyota;corola;false;Pequeño;5

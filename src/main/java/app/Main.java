@@ -32,27 +32,7 @@ public class Main {
                     GestorFlota.listarVehiculosDisponibles();
                     break;
                 case 4:
-                    System.out.println("==== REALIZAR RESERVA ====");
-                    System.out.print("DNI del cliente: ");
-                    String dniRes = sc.nextLine();
-                    Cliente cRes = GestorReservas.buscarCliente(dniRes);
-
-                    System.out.print("Matrícula del vehículo: ");
-                    String matRes = sc.nextLine();
-                    Vehiculo vRes = GestorReservas.buscarVehiculo(matRes);
-
-                    if (cRes != null && vRes != null && vRes.isDisponible()) {
-                        System.out.print("¿Cuántos días? ");
-                        int dias = sc.nextInt();
-                        sc.nextLine(); // Limpiar buffer
-
-                        Reserva r = GestorReservas.realizarReserva(cRes, vRes, dias);
-                        if (r != null) {
-                            System.out.println("Reserva realizada. Ticket generado.");
-                        }
-                    } else {
-                        System.out.println("ERROR: Datos inválidos o vehículo no disponible.");
-                    }
+                    menuReserva();
                     break;
                 case 5:
                     GestorClientes.listarClientes();
@@ -170,5 +150,32 @@ public class Main {
         // El GestorReservas suele tener su propio método para guardar su lista si la tiene
         GestorReservas.guardarDatos();
     }
+
+
+    public static void menuReserva(){
+        System.out.println("==== REALIZAR RESERVA ====");
+        System.out.print("DNI del cliente: ");
+        String dniRes = sc.nextLine();
+        Cliente cRes = GestorReservas.buscarCliente(dniRes);
+
+        System.out.print("Matrícula del vehículo: ");
+        String matRes = sc.nextLine();
+        Vehiculo vRes = GestorReservas.buscarVehiculo(matRes);
+
+        if (cRes != null && vRes != null && vRes.isDisponible()) {
+            System.out.print("¿Cuántos días? ");
+            int dias = sc.nextInt();
+            sc.nextLine(); // Limpiar buffer
+
+            Reserva r = GestorReservas.realizarReserva(cRes, vRes, dias);
+            if (r != null) {
+                System.out.println("Reserva realizada. Ticket generado.");
+            }
+        } else {
+            System.out.println("ERROR: Datos inválidos o vehículo no disponible.");
+        }
+
+    }
+
 
 }

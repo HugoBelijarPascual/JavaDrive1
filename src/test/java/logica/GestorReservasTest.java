@@ -42,9 +42,9 @@ class GestorReservasTest {
     void testRealizarReservaFallo() {
         Cliente c = new Cliente("1", "A", "1");
         Coche v = new Coche("M1", "X", "X", false, TipoCoche.Pequeño, 5);
-        v.setDisponible(false); // Ya está ocupado
+        v.setDisponible(false);
 
-        // Intentar reservar vehículo no disponible
+        // Intentar reservar un vehículo que no este disponible
         Reserva r = GestorReservas.realizarReserva(c, v, 3);
         assertNull(r, "No debería permitir reservar un coche no disponible");
     }

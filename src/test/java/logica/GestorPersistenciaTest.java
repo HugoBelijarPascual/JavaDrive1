@@ -45,13 +45,13 @@ class GestorPersistenciaTest {
 
     @Test
     void testTicketsYIds() {
-        // Creamos una reserva ficticia (necesitas mock o datos reales)
+        // Simulamos una reserva
         Cliente c = new Cliente("1", "A", "1");
         Coche v = new Coche("M", "M", "M", true, TipoCoche.Pequeño, 5);
 
         LocalDate hoy = LocalDate.now();
         LocalDate manana = hoy.plusDays(1);
-        Reserva r = new Reserva(c, v, hoy, manana); // Suponiendo este constructor
+        Reserva r = new Reserva(c, v, hoy, manana);
 
         // Test exportar
         assertDoesNotThrow(() -> GestorPersistencia.gestor.exportarTicket(r));
@@ -64,8 +64,8 @@ class GestorPersistenciaTest {
     void testPersistenciaVehiculosCompleto() {
         List<Vehiculo> flotaOriginal = new ArrayList<>();
         flotaOriginal.add(new Coche("C1", "Seat", "Ibiza", true, TipoCoche.Pequeño, 5));
-        flotaOriginal.add(new Furgoneta("F1", "Ford", "Transit", true, true, 1000)); // Carga
-        flotaOriginal.add(new Furgoneta("F2", "VW", "Multivan", true, false, 7));    // Pasajeros (NUEVO)
+        flotaOriginal.add(new Furgoneta("F1", "Ford", "Transit", true, true, 1000));
+        flotaOriginal.add(new Furgoneta("F2", "VW", "Multivan", true, false, 7));
 
         GestorPersistencia.gestor.guardarVehiculos(flotaOriginal);
 
