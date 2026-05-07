@@ -12,14 +12,12 @@ public class GestorFlota {
 
     public static boolean ejecutarAltaCoche(Coche coche) {
         if (coche == null) return false;
-        // Evitamos duplicados para subir Branch %
         for (Vehiculo v : flota) {
             if (v.getMatricula().equalsIgnoreCase(coche.getMatricula())) return false;
         }
         return flota.add(coche);
     }
 
-    // Mantenemos el nombre original
     public static boolean ejecutarAltaFurgoneta(Furgoneta furgoneta) {
         if (furgoneta == null) return false;
         for (Vehiculo v : flota) {

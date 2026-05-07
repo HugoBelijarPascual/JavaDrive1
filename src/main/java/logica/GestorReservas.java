@@ -27,7 +27,6 @@ public class GestorReservas {
         return null;
     }
 
-    // MÉTODO TESTEABLE: Ahora devuelve la reserva creada
     public static Reserva realizarReserva(Cliente cliente, Vehiculo vehiculo, int dias) {
         if (cliente == null || vehiculo == null || !vehiculo.isDisponible()) {
             return null;

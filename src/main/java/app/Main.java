@@ -74,10 +74,8 @@ public class Main {
         System.out.print("Tlf: ");
         String telefono = sc.nextLine();
 
-        // Creamos el modelo
         Cliente nuevo = new Cliente(dni, nombre, telefono);
 
-        // El gestor intenta añadirlo y nos dice si pudo
         if (GestorClientes.crearCliente(nuevo)) {
             System.out.println("Cliente registrado con éxito.");
         } else {
@@ -147,7 +145,6 @@ public class Main {
         GestorPersistencia.gestor.guardarClientes(GestorClientes.clientes);
         GestorPersistencia.gestor.guardarVehiculos(GestorFlota.flota);
 
-        // El GestorReservas suele tener su propio método para guardar su lista si la tiene
         GestorReservas.guardarDatos();
     }
 
@@ -165,7 +162,7 @@ public class Main {
         if (cRes != null && vRes != null && vRes.isDisponible()) {
             System.out.print("¿Cuántos días? ");
             int dias = sc.nextInt();
-            sc.nextLine(); // Limpiar buffer
+            sc.nextLine();
 
             Reserva r = GestorReservas.realizarReserva(cRes, vRes, dias);
             if (r != null) {

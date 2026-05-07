@@ -81,7 +81,6 @@ public class GestorPersistencia {
         }
     }
 
-    // Los métodos de Tickets e IDs se quedan igual, pero los testearemos creando archivos temporales
     public void exportarTicket(Reserva reserva) {
         String carpeta = "Reservas";
         File dir = new File(carpeta);
