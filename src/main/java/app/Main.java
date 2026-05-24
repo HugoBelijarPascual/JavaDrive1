@@ -1,11 +1,11 @@
 package app;
 
-import logica.GestorClientes;
-import logica.GestorFlota;
-import logica.GestorPersistencia;
-import logica.GestorReservas;
+import logica.*;
 import model.*;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Main {
@@ -14,7 +14,7 @@ public class Main {
     public static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
-
+        GestorConexion.probarConexion();
         cargarDatos();
         int opcion;
 
@@ -78,6 +78,18 @@ public class Main {
 
         if (GestorClientes.crearCliente(nuevo)) {
             System.out.println("Cliente registrado con éxito.");
+            String sql = "INSERT INTO cliente (dni, nombre, telefono) VALUES (?, ?, ?)";
+
+            try (Connection conn = GestorConexion.obtenerConexion(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+                pstmt.setString(1, nuevo.getDni());
+                pstmt.setString(2, nuevo.getNombre());
+                pstmt.setString(3, nuevo.getTelefono());
+                pstmt.executeUpdate();
+
+            }catch (SQLException e) {
+                System.out.println( "Error al insertar en la base de datos: " + e.getMessage());
+            }
         } else {
             System.out.println("Error: El DNI ya existe o los datos son incorrectos.");
         }
@@ -95,7 +107,7 @@ public class Main {
             String mar = sc.nextLine();
             System.out.print("Modelo: ");
             String mod = sc.nextLine();
-
+            //TODO FALTA ARREGLAR QUE LA MATRICULA ES FOREAN KEY DE VEHICULO
             if (tipo.equalsIgnoreCase("C")) {
                 System.out.print("Tipo (Pequeño, Familiar, Deportivo): ");
                 TipoCoche tc = TipoCoche.valueOf(sc.nextLine());
@@ -104,6 +116,22 @@ public class Main {
 
                 if (GestorFlota.ejecutarAltaCoche(new Coche(mat, mar, mod, true, tc, plazas))) {
                     System.out.println("Coche registrado.");
+
+                    String sql = "INSERT INTO coche (matricula, tipoCoche, nPlazas) VALUES (?, ?, ?)";
+
+                    try (Connection conn = GestorConexion.obtenerConexion(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+                        pstmt.setString(1, mat);
+                        pstmt.setString(2, tc.name());
+                        pstmt.setInt(3, plazas);
+
+                        pstmt.executeUpdate();
+
+                    }catch (SQLException e) {
+                        System.out.println( "Error al insertar en la base de datos: " + e.getMessage());
+                    }
+
+
                 } else {
                     System.out.println("Error: Matrícula duplicada.");
                 }
@@ -117,13 +145,39 @@ public class Main {
 
                 if (GestorFlota.ejecutarAltaFurgoneta(new Furgoneta(mat, mar, mod, true, carga, cap))) {
                     System.out.println("Furgoneta registrada.");
+
+                    String sql = "INSERT INTO furgoneta (matricula, tipo, capacidad) VALUES (?, ?, ?)";
+
+                    try (Connection conn = GestorConexion.obtenerConexion(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                        pstmt.setString(1, mat);
+                        pstmt.setString(2, carga ? "Carga" : "Pasajeros");
+                        pstmt.setInt(3, cap);
+                        pstmt.executeUpdate();
+                    }catch (SQLException e) {
+                        System.out.println( "Error al insertar en la base de datos: " + e.getMessage());
+                    }
+
                 } else {
                     System.out.println("Error: Matrícula duplicada.");
                 }
             }
+
+            String sql = "INSERT INTO vehiculo (matricula, marca, modelo, disponibilidad) VALUES (?, ?, ?, ?)";
+
+            try(Connection conn = GestorConexion.obtenerConexion(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setString(1, mat);
+                pstmt.setString(2, mar);
+                pstmt.setString(3, mod);
+                pstmt.setBoolean(4, true);
+                pstmt.executeUpdate();
+            }catch (SQLException e) {
+                System.out.println("Error al insertar en la base de datos: " + e.getMessage());
+            }
         } catch (Exception e) {
             System.out.println("Error en los datos introducidos.");
         }
+
+
     }
 
     public static void cargarDatos() {
