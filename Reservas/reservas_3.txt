@@ -1,0 +1,23 @@
+============================================
+ CONTRATO DE ALQUILER - JAVADRIVE
+============================================
+ID RESERVA: 3
+FECHA EMISIÓN: 2026-05-25
+--------------------------------------------
+DATOS DEL CLIENTE:
+Nombre: Prueba
+DNI: 987654321
+Teléfono: 123456789
+--------------------------------------------
+DATOS DEL VEHÍCULO: 
+Marca y Modelo: Fiat 500
+Matrícula: 4324FDG
+
+Detalles:  Furgoneta de Carga [1000 kg]
+--------------------------------------------
+PERIODO DE ALQUILER: 
+Fecha de recogida: 2026-05-25
+Fecha de devolución: 2026-06-04
+Total días: 10
+--------------------------------------------
+ESTADO: Confirmado y Pendiente de pago

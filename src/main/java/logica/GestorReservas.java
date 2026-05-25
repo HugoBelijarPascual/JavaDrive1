@@ -5,7 +5,13 @@ import model.Cliente;
 import model.Reserva;
 import model.Vehiculo;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GestorReservas {
 
@@ -47,5 +53,35 @@ public class GestorReservas {
 
     public static void exportarTicket(Reserva reserva) {
         GestorPersistencia.gestor.exportarTicket(reserva);
+    }
+
+    public static List<Reserva> ListarReservasBD() {
+        List<Reserva> lista = new ArrayList<>();
+
+        String sql = "SELECT * FROM reservar";
+
+        try (Connection conn = GestorConexion.obtenerConexion();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()){
+                String dni = rs.getString("dni");
+                String matricula = rs.getString("matricula");
+                LocalDate fechaInicio = LocalDate.parse(rs.getString("fechaInicio"));
+                LocalDate fechaFin = LocalDate.parse(rs.getString("fechFin"));
+
+                Reserva r = new Reserva(buscarCliente(dni), buscarVehiculo(matricula), fechaInicio, fechaFin);
+
+                lista.add(r);
+            }
+
+
+
+        }catch (SQLException e) {
+            System.out.println( "Error al insertar en la base de datos: " + e.getMessage());
+        }
+        System.out.println("Se han cargado las reservas");
+        System.out.println("----------------------------------------");
+        return lista;
     }
 }

@@ -1,1 +1,2 @@
 COCHE;M1;X;X;false;Pequeño;5
+FURGONETA;4324FDG;Fiat;500;false;true;1000

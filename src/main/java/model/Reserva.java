@@ -49,6 +49,22 @@ public class Reserva {
                         "--------------------------------------------"+"\n"+
                         "ESTADO: Confirmado y Pendiente de pago";
     }
+    @Override
+    public String toString() {
+        String clienteStr = (cliente != null)
+                ? cliente.getNombre() + " (" + cliente.getDni() + ")"
+                : "null";
+        String vehiculoStr = (vehiculo != null)
+                ? vehiculo.getMarca() + " " + vehiculo.getModelo() + " [" + vehiculo.getMatricula() + "]"
+                : "null";
+        return "Reserva{" +
+                "id=" + idReserva +
+                ", cliente=" + clienteStr +
+                ", vehiculo=" + vehiculoStr +
+                ", inicio=" + fechaInicio +
+                ", fin=" + fechaFin +
+                '}';
+    }
     public int getIdReserva() {
         return idReserva;
     }
